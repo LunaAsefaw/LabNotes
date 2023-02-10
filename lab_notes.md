@@ -142,3 +142,25 @@ Component | Icon       | Description
 
    ![Flowchart](img/scratch.drawio.png)
    
+   # Week4
+   
+   ## Python
+   
+  Properties:
+  1. High-level: Python is a very high-level programming language because its syntax so closely resembles the English language. High-level means it is more readible to people. 
+  2. General purpose: It is not designed only for a specific purpose, for example: SQL is strictly for handling databases.
+  3. Dynamic: Dynamic languages are those whose variables can take on any type at runtime, and usually can even hold multiple values of different types over their lifespan.
+  
+  Programming concepts:
+  1. Variable: Used to store data. Unlike other languages, python can read data type without user specifying data type during variable creation. Eg:
+  a= 'abc' -> already registered as string.
+  2. If statements: These are used to dictate the output based on different condiitions. If condition met -> outcome A, else -> outcome B. If && is used, all the conditions must be met to return true. If Or is used, at least one condition should be met to return true.
+  3. Loops: These run until a specified condition is met. For loop differs from while loop in that the intialisation and incrementation happens atthe beginning of the loop.
+  4. Functions: This is a block of code that is used to perform a task and can be used multiple times as long as it is called in the code. There are two types: One that requires input during the call and those that do not need inputs (variables) when called.
+
+Duties for the week:
+1. Watched tutorials on the Kartoza Intern site.
+2. Completed the EMC testing exercise for R1-R7.
+3. Signed up for an online python platform that allows user to take on different challenges with different levels of difficulty and get points for solving the python challenges. This will help me get used to the syntax of python and train my mind to think a certain way when I code.
+  
+   

@@ -162,5 +162,15 @@ Duties for the week:
 1. Watched tutorials on the Kartoza Intern site.
 2. Completed the EMC testing exercise for R1-R7.
 3. Signed up for an online python platform (Edabit) that allows user to take on different challenges with different levels of difficulty and get points for solving the python challenges. This will help me get used to the syntax of python and train my mind to think a certain way when I code.
-  
-   
+
+
+# Week 5
+
+Additional python concepts and tips:
+1. When slicing, the outter boundary is an exclusive boundary. E.g: a=[1,2,3] so a[0:2] returns [1,2].
+2. {} for sets (removes duplicates), [] for array, () for list
+3. When you have variables and methods, class is recommended. 
+
+PostgreSQL notes:
+
+![DB](img/Database.png) 

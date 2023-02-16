@@ -174,3 +174,49 @@ Additional python concepts and tips:
 PostgreSQL notes:
 
 ![DB](img/Database.png) 
+
+Primary key (pk): Unique identifier of record in a table.
+Foreign key (fk): A key that links two tables. Helpful for normalisation, i.e., reduce redudancy, maintain ACID of database, helps with normalisation. In a one-to-many relationship, the one that can have 'many' records provides the pk as fk. For example, one street can have many people so the table people would have streets id as fk.
+Serial: Type of data type that allows automatic incrementation, suitable for primary keys.
+
+Creating a table:
+Create table __provide name for table__(list the columns for the table with the data type, whether they will be null or not and indicate the pk)
+Example: Create table employees (id serial not null primary key, name varchar(50), surname varchar(200), age int, employer_id int)
+
+If employees is linked to another table, eg employer table. You declare foreign keys by:
+foreign-key constraints:
+"employer_fk" FOREIGN KEY (id) REFERENCES employer(id)
+Format: (name for fk)--Foreign key---(id for the table you want to create a fk)---references---(reference the id that of the table you are linking too)
+
+Creating indexes:
+Indexes help improve speed for queries. Implemented through:
+create index --give name for index-- on --provide table name--(--input column name)
+eg: create index employee_name_idx on employee (name)
+
+Dropping tables:
+Format: Drop table --table name--
+NB: Tables that are fk in other tables produce an error because they're linked to other tables but if you do brute force delete(cascade), it will be deleted along with records that had a relationship to the deleted table.
+
+Populating the created tables:
+Insert into --table name--(list the column names, the same way they are stated in the create table line, just exclude serial id and keep only names) values (insert values in the same order that the columns are listed)
+eg: Insert into employees (name, surname, age, employer_id) values ('Luna', 'Asefaw', 23, 2) -- Rememeber the 2 will refer to record id=2 in employer table.
+
+Geospatial SQL:
+Creating table with geometry(a polygon):
+create table dams (id serial not null primary key, municipality varchar(250), province varchar(100), geom not null);
+alter table dams
+add constraint dam_geom
+check (st_geomtrytype(geom)= 'ST_Polygon'::text) -- this ensures the added feature is a polygon
+
+Foreign keys
+Alter table --table name-- add --column name--  --data type-- references -f-fk table--(--id column in fk)
+Creating spatial indexes:
+Create index --index name-- on --table name-- using gist (--geometry column name--)
+
+Creating a polygon:
+Insert into --table name-- (list columns) values (insert values in order. For geomtry column: 'SRID= (Provide espg; POLYGON((x1 y1, x2 y2, x3 y3..x1 y1))
+
+Creating linestring: 
+Same as above, except you say LINESTRING instead of polygon and the last coordinate shouldn't be the first coordinate
+
+

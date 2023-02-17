@@ -191,6 +191,8 @@ Additional feature:
 - User can choose which feature to use (Validate Point, Check History, or End)
 
 - If the feature user chooses does not exist, then it will print "Command does not exist".
+- 
+[Task1-code](https://github.com/LunaAsefaw/LabNotes/blob/main/task1.py)
 
 Task 2:
 1. Combine your functions into a Class named PointValidator
@@ -200,7 +202,8 @@ Task 2:
 3. Add feature to export current history to a file. Filename must contain current date and time when the file is exported. Example: "point-2023.02.14-00.15.01", the format is "point-{year}.{double digit month}.{double digit date}-{double digit hour}.{double digit minutes}.{double digit seconds}"
 
 4. Add feature to read exported file. Use must input the filename and/or the full path of the file. The content of the file would be added to the current history. If you used list to store current history, then the file content would be added to that list
-PostgreSQL notes:
+
+[Task2-code](https://github.com/LunaAsefaw/LabNotes/blob/main/task2.py)
 
 ## PostgreSQL
 

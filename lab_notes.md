@@ -171,7 +171,38 @@ Additional python concepts and tips:
 2. {} for sets (removes duplicates), [] for array, () for list
 3. When you have variables and methods, class is recommended. 
 
+## Python tasks
+
+Task 1:
+Geometry Point Validator
+
+Basic feature:
+
+- Make a Python function that will validate a Point geometry and print whether it is valid and the reason.
+
+- The Lat and Lon in float will be taken from user input.
+
+Additional feature:
+
+- Show the history of all Points entered by the user. It will print the count of Points, followed by each point, validation result and reason.
+
+- End, to end session
+
+- User can choose which feature to use (Validate Point, Check History, or End)
+
+- If the feature user chooses does not exist, then it will print "Command does not exist".
+
+Task 2:
+1. Combine your functions into a Class named PointValidator
+
+2. Add error handling at least on the lat and lon input. Think of any error that could be handled.
+
+3. Add feature to export current history to a file. Filename must contain current date and time when the file is exported. Example: "point-2023.02.14-00.15.01", the format is "point-{year}.{double digit month}.{double digit date}-{double digit hour}.{double digit minutes}.{double digit seconds}"
+
+4. Add feature to read exported file. Use must input the filename and/or the full path of the file. The content of the file would be added to the current history. If you used list to store current history, then the file content would be added to that list
 PostgreSQL notes:
+
+## PostgreSQL
 
 ![DB](img/Database.png) 
 

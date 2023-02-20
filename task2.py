@@ -1,15 +1,22 @@
 from datetime import datetime
 import os
-#global variable
-history=[]
+
 
 #create class
-class Validator:
+class PointValidator:
    
-    def __init__(self, command):
-        self.command=command
+    def __init__(self):
+    
+        self.history=[]
+        pass
     #create function that determines outcome based on option selection from user
-    def options(self, history):
+
+    def options(self):
+        
+        options= '1. Validate point\n2. Check history\n3. Export current history\n4. Read exported file\n5. End\n'
+        print(options)
+        self.command= input('What would you like to do? Please only enter the number: ')
+        print('selected option: ', self.command)
         
         
         if self.command=='1':
@@ -18,11 +25,10 @@ class Validator:
                 lat=float(lat)
                 lon= input('Input Longtitude: ')
                 lon=float(lon)
-                self.validate(lat, lon, history)
+                self.validate(lat, lon)
             except ValueError:
-                
                 print('Error: Non-numeric value returned. Please input numeric value')
-                self.options(history)#go back to input latitude step
+                self.options()#go back to input latitude step
         elif self.command=='2':
             self.check_history()
             
@@ -40,61 +46,58 @@ class Validator:
             
         elif self.command=='5':
             print('Goodbye')
-            history=[]
+            self.history=[]
             quit()
         else:
             print('Option not available. Please choose option from list below and enter only the number (1-5)')
-            reset()
+            self.options()
             
-            
-    def validate(self, lat, lon, history):
-        self.lat=lat
-        self.lon=lon
+      
+    def validate(self, lat, lon):
+
 
         if lat <= 90 and lat>= -90 and lon<=180 and lon>=-180:
             print('Valid because latitude is between -90 and 90 and longtitude is between -180 and 180\n')
             reason='Valid because latitude is between -90 and 90 and longtitude is between -180 and 180'
-            history.append([lat, lon, reason])
-            reset()
+            self.history.append([lat, lon, reason])
+            self.options()
         elif lat >= 90 or lat<= -90:
             if lon<=180 and lon>=-180:
                 print('Invalid because latitude should be between -90 and 90\n')
                 reason= 'Invalid because latitude should be between -90 and 90'
-                history.append([lat, lon, reason])
-                reset()
+                self.history.append([lat, lon, reason])
+                self.options()
             elif lon>=180 or lon<=-180 :
                 print('Invalid because latitude should be between -90 and 90 and longitude should be between -180 and 180\n')
                 reason= 'Invalid because latitude should be between -90 and 90 and longitude should be between -180 and 180'
                 self.history.append([lat, lon, reason])
-                reset()
+                self.options()
         elif lon >= 180 or lon<= -180:
             if lat<=90 and lat>=-90:
                 print('Invalid because longitude should be between -180 and 180\n')
                 reason= 'Invalid because longitude should be between -180 and 180'
-                history.append([lat, lon, reason])
-                reset()
+                self.history.append([lat, lon, reason])
+                self.options()
     def check_history(self):
-       if len(history)==0:
+       if len(self.history)==0:
            print('You have not inputed any coordinates')
        else:
-           for i in history:
+           for i in self.history:
                print(i)
-       reset()
+       self.options()
 
     def export(self):
-        d=datetime.now()
-        only_date, only_time= d.date(), d.time()
-        date= str(only_date)
-        time=str(only_time)
+        now=datetime.now()
+        date=now.strftime('%Y.%m.%d')
+        time=now.strftime('%H.%M.%S')
        
-        name_1=date[0:4]+ '.'+ date[5:7]+'.'+date[9:]
-        name_2=time[0:2]+'.'+time[3:5]+'.'+time[6:8]
-        file_name='Point-'+name_1+'-'+name_2+'.txt'
+
+        file_name='Point-'+date+'-'+time+'.txt'
         with open(file_name, 'w') as f:
-           for item in history:
+           for item in self.history:
                 f.write('%s\n'% item)
         print('File successfully exported :) Filename= '+ file_name +'\n')
-        reset()
+        self.options()
 
     def read(self, path, option):
         self.option=option
@@ -106,34 +109,34 @@ class Validator:
                 file=open(path, 'r')
                 for line in file:
                     line=line.strip()
-                    history.append(line)
-                    print(history)
+                    self.history.append(line)
+                    length=len(file.readlines())
+                length=length+1
+                print('Total number of records imported: ', length)
             except FileNotFoundError:
                 print("File not found. Remember to exclude inverted commas when putting file name.\n")
-            reset()
+            self.options()
 
         elif option==2:
             try:
                 file=open(path, 'r+')
                 for line in file:
                     line=line.strip()
-                    history.append(line)
-                    print(history)
+                    self.history.append(line)
+                    length=len(file.readlines())
+                length=length+1
+                print('Total number of records imported: ', length)
+                    
             except FileNotFoundError:
                 print("File not found. Remember to exclude inverted commas when putting file path.\n")
-        reset()    
+        self.options()    
         
     def error(self):
         print('Error: Non-numeric value returned. Please input numeric value')
-        reset() 
+        self.options()
 
-        
-def reset():
-    options= '1. Validate point\n2. Check history\n3. Export current history\n4. Read exported file\n5. End\n'
-    print(options)
-    command= input('What would you like to do? Please only enter the number: ')
-    print('selected option: ', command)
   
-    test=Validator(command) #object
-    test.options(history)
-reset() 
+
+if __name__== '__main__':
+    validator=PointValidator()
+    reset=validator.options()

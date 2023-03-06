@@ -274,4 +274,43 @@ Creating linestring:
 
 Same as above, except you say LINESTRING instead of polygon and the last coordinate shouldn't be the first coordinate
 
+# Week 6 and 7
 
+## Styling a tree:
+
+ 1. Create a point layer witha few digitised points and input varying values for their crown radius.
+ 2. Symbology> Select single symbol> Change symbol layer to 'geometry generator' and select 'Polygon' for geometry type (this allows the creation of polygon on the points created). 
+ 3. Input the following expression: 'wave_randomized( 
+	buffer($geometry, crown_radius_m),
+	1, 3,
+	0.01, 0.1,
+1)'.  Wave_radomized constructs random curved waves among the boundary of geometry. The size will be based on a buffer that is generated from the radius, thus if radius for point A is 2 and point b is 14, point b will have a bigger buffer around it. We have set the seed to 1, this means the randomised waves generated are not completely random and this saves the state of the random function so even though the are random, they will remain constant so the same numbers will be generated each time. For example the randomness generated for point a and b will be different but each time you run your algorithm, point b will have the same randomised numbers. This prevents the tree styling from changing everytime you move around the canvas. 
+4. Duplicate the style so you have a second layer listed and remove the 'Fill' option from the first layer. The order of your styles will be geometry generator> geometry generator> Fill.
+5. On the Fill layer, change 'Symbol Layer type' to 'Gradient Fill'. Here you can select a shade of green and draw effects to reflect the colour you'd like. For example, select green, add shade, specify reference points. The reference point 1 tells us where the light of the gradient should originate. The box below shows the top-left represents (x,y) = (0,0) and the bottom-right is (1,1). As such your gradient direction is determined by the (x,y) values in the first and second reference points. Example, reference point 1 (0, 0.45) and reference 2 (1, 0.35), this creates a diagonal line from which light originates.
+6. To make the x mark on top of your trees, draw an 'X' in Inkscape and save as SVG.
+7. On QGIS, add another layer on your symbology and select 'SVG marker' and add the svg marker created in step 6.
+
+Output:
+ ![Output](img/trees.png)
+ 
+ ## Python
+ New packages for the week:
+Fiona: This reads and writes GIS formats. Using fiona.open() you can read features from GIS formats such as shapefiles and also write to files. 
+
+Code to read shapefiles: 
+
+with fiona.open('shapefile.shp')as shapefile
+--Since you will probably want to write to the file, initialise your import with a coordinate system, format driver name and record schema
+
+profile=shapefile.profile
+profile['schema']['geometry'] = 'Point'
+profile['driver']='GPKG' 
+
+To write to file and export centroid:
+with fiona.open('something.gpkg', 'w', ** profile) as output:
+
+ for f in shapefile:
+  centroid_shp= shape(f.geometry).centroid
+  new_geom= Geometry.from_dict(centroid_shp)
+  
+  ouput.write(geometry=new_geom, properties=f.properties)

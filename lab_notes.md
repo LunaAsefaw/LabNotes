@@ -291,6 +291,7 @@ Same as above, except you say LINESTRING instead of polygon and the last coordin
 7. On QGIS, add another layer on your symbology and select 'SVG marker' and add the svg marker created in step 6.
 
 Output:
+
  ![Output](img/Output.png)
  
  ## Python

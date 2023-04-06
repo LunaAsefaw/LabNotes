@@ -314,4 +314,66 @@ with fiona.open('something.gpkg', 'w', ** profile) as output:
   centroid_shp= shape(f.geometry).centroid
   new_geom= Geometry.from_dict(centroid_shp)
   
-  ouput.write(geometry=new_geom, properties=f.properties)
+  output.write(geometry=new_geom, properties=f.properties)
+  
+  ## Data cleaning and exporting geopackages
+  
+#importing libraries
+  
+import pandas
+
+import geopandas as gpd
+
+from shapely.geometry import Polygon
+
+#export excel file and read a specific spreadsheet
+
+df= pandas.read_excel('excelfile.xlsx', sheet_name= 'spreadsheet')
+
+#remove extra [] on both ends
+
+df['Polygones']= df['Polygones'].str[3:]
+
+df['Polygones']= df['Polygones'].str[:-2]
+
+#create function to replace [] and make values float type
+
+def formating(s):
+
+    s = s.replace('[', '').replace(']', '').split(',')
+    
+    s= [float(x) for x in s]
+    
+    return s
+
+#apply function on the column of interest
+
+df['Polygones']= df['Polygones'].apply(formating)
+
+#create latitude and longitude columns from one column so shapely works
+
+df['LAT'] = df['Polygones'].apply(lambda x: x[1::2])
+
+df['LON'] = df['Polygones'].apply(lambda x: x[::2])
+
+#create a list of shapely polygons
+
+geom_list = [(x, y) for x, y  in zip(df['LON'],df['LAT'])]
+
+geom_list_2 = [Polygon(tuple(zip(x, y))) for x, y in geom_list]
+
+
+#create geodataframe
+
+polygon_gdf =  gpd.GeoDataFrame(geometry=geom_list_2)
+
+#get column names since column has accented characters
+
+print(df.columns.values.tolist())
+
+polygon_gdf['Région Médicale']= df['Région Médicale']
+
+#export to geopackage
+
+polygon_gdf.to_file(filename='polygon.gpkg', driver="GPKG")
+  

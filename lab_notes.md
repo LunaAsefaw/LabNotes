@@ -317,6 +317,8 @@ with fiona.open('something.gpkg', 'w', ** profile) as output:
   output.write(geometry=new_geom, properties=f.properties)
   
   ## Data cleaning and exporting geopackages
+  The goal is to clean the dataset, which consists of a spreasheet that has names of the polygons and coordinates of the polygon in one cell, enclosed by three square brackets on both ends. Once the data is cleaned, we will create a geodataframe then create a geopackage.
+  ```
   
 #importing libraries
   
@@ -348,13 +350,13 @@ def formating(s):
 
 #apply function on the column of interest
 
-df['Polygones']= df['Polygones'].apply(formating)
+df['Polygons']= df['Polygons'].apply(formating)
 
 #create latitude and longitude columns from one column so shapely works
 
-df['LAT'] = df['Polygones'].apply(lambda x: x[1::2])
+df['LAT'] = df['Polygons'].apply(lambda x: x[1::2])
 
-df['LON'] = df['Polygones'].apply(lambda x: x[::2])
+df['LON'] = df['Polygons'].apply(lambda x: x[::2])
 
 #create a list of shapely polygons
 
@@ -370,6 +372,7 @@ polygon_gdf =  gpd.GeoDataFrame(geometry=geom_list_2)
 #get column names since column has accented characters
 
 print(df.columns.values.tolist())
+#assign names to the polygons
 
 polygon_gdf['Région Médicale']= df['Région Médicale']
 

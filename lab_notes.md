@@ -334,9 +334,9 @@ df= pandas.read_excel('excelfile.xlsx', sheet_name= 'spreadsheet')
 
 #remove extra [] on both ends
 
-df['Polygones']= df['Polygones'].str[3:]
+df['Polygons']= df['Polygons'].str[3:]
 
-df['Polygones']= df['Polygones'].str[:-2]
+df['Polygons']= df['Polygons'].str[:-2]
 
 #create function to replace [] and make values float type
 
